@@ -9,7 +9,9 @@ class RequestAndResponse extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            response: ''
+            response: '',
+            userInput: '',
+            isClicked: false
         }
     }
 
@@ -21,13 +23,28 @@ class RequestAndResponse extends Component {
         })
     }
 
-    
+    click = (e) => {
+        if (e.key === "Enter") {
+            this.response(this.state.userInput)
+        }
+    }
+
+    change = (event) => {
+        const newValue = event.target.value
+        this.setState({
+            userInput: newValue
+        })
+    }
 
     render() {
         return (
             <div className="container">
-                <AwesomeButton className='genButton' type='secondary' onPress={() => {this.response()}}>Generate Ideas</AwesomeButton>
-                
+                <div className="user-input-cover">
+                        <div className="td">
+                            <input className='user-input' type="text" onKeyDown={this.click} onChange={this.change} value={this.state.val} placeholder="I like music, art, and literature..." required/>
+                        </div>
+                </div>
+                    <AwesomeButton className='genButton' type='secondary' onPress={() => {this.response(this.state.userInput)}}>Generate Ideas</AwesomeButton>
                 { this.state.response ?
                     <div className="response-cover">
                         <p>
